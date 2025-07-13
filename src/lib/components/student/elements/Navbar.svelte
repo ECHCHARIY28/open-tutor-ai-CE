@@ -4,6 +4,8 @@
 	const i18n = getContext('i18n');
 	import { goto } from '$app/navigation';
 	import { user } from '$lib/stores';
+	import { generateInitialsImage } from '$lib/utils';
+	import { get } from 'svelte/store';
 
 	// Props
 	export let username: string = '';
@@ -18,6 +20,11 @@
 	let showMobileMenu: boolean = false;
 
 	let showUserDropdown: boolean = false;
+
+	let profileImageUrl = '';
+
+	// reactive assignment to update when store changes
+	$: profileImageUrl = $user?.profile_image_url || generateInitialsImage($user?.name || 'User');
 
 	// Add this function around line 43 with other toggle functions
 	function toggleUserDropdown() {
@@ -321,7 +328,7 @@
 				aria-expanded={showUserDropdown}
 				on:click={toggleUserDropdown}
 			>
-				<img src="/static/student-avatar.png" alt="User" class="h-full w-full object-cover" />
+				<img src={profileImageUrl} alt="User" class="h-full w-full object-cover" />
 			</button>
 			{#if showUserDropdown}
 				<div
