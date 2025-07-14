@@ -328,7 +328,7 @@
 				aria-expanded={showUserDropdown}
 				on:click={toggleUserDropdown}
 			>
-				<img src={profileImageUrl} alt="User" class="h-full w-full object-cover" />
+				<img src={profileImageUrl} alt="User" crossorigin="anonymous" class="h-full w-full object-cover" />
 			</button>
 			{#if showUserDropdown}
 				<div

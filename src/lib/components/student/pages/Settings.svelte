@@ -131,6 +131,7 @@
 							<img
 								src={profileImageUrl !== '' ? profileImageUrl : generateInitialsImage(name)}
 								alt="profile"
+								crossorigin="anonymous"
 								class="rounded-full size-20 object-cover"
 							/>
 
@@ -180,10 +181,20 @@
 							class="text-xs text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 px-4 py-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition"
 							on:click={async () => {
 								const url = await getGravatarUrl(localStorage.token, $user.email);
+								console.log('Gravatar URL:', url);
+								if (url) {
+									profileImageUrl = url;
+								} else {
+									profileImageUrl = '/user.png'; // fallback
+									toast.error('Failed to load Gravatar image');
+								}
+								profileImageInputElement.value = '';
+								}}
+							>
+							{$i18n.t('Use Gravatar')}
+						</button>
 
-								profileImageUrl = url;
-							}}>{$i18n.t('Use Gravatar')}</button
-						>
+
 
 						<button
 							class="text-xs text-red-600 bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-lg hover:bg-red-100 dark:hover:bg-red-900 transition"
