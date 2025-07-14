@@ -518,7 +518,7 @@
 				on:click={toggleMobileMenu}
 				aria-label="User menu"
 			>
-				<img src="/static/student-avatar.png" alt="User" class="h-full w-full object-cover" />
+				<img src={profileImageUrl} alt="User" crossorigin="anonymous" class="h-full w-full object-cover" />
 			</button>
 
 			<!-- Mobile menu (dropdown style instead of slide-in) -->
