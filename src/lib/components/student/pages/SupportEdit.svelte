@@ -497,6 +497,7 @@
 								<input
 									type="text"
 									bind:value={customSubject}
+									on:input={() => (selectedSubject = '')}
 									placeholder={$i18n.t('Enter your custom subject')}
 									class="flex-1 px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-800 dark:text-white"
 								/>
