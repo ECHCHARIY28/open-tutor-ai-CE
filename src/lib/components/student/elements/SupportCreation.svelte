@@ -429,8 +429,7 @@
 		{ id: 'geography', name: 'Geography', icon: '🌍' },
 		{ id: 'chemistry', name: 'Chemistry', icon: '🔬' },
 		{ id: 'biology', name: 'Biology', icon: '🌿' },
-		{ id: 'physics', name: 'Physics', icon: '⚛️' },
-		{ id: 'other', name: 'Other', icon: '❓' }
+		{ id: 'physics', name: 'Physics', icon: '⚛️' }
 	];
 
 	// Reactive list that will include any custom subjects read from localStorage
@@ -734,8 +733,7 @@
 		computer_science: 'computer',
 		languages: 'translate',
 		business: 'business',
-		philosophy: 'psychology',
-		other: 'school'
+		philosophy: 'psychology'
 	};
 </script>
 

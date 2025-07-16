@@ -92,8 +92,7 @@
 		{ id: 'geography', name: 'Geography', icon: '🌍' },
 		{ id: 'chemistry', name: 'Chemistry', icon: '🔬' },
 		{ id: 'biology', name: 'Biology', icon: '🌿' },
-		{ id: 'physics', name: 'Physics', icon: '⚛️' },
-		{ id: 'other', name: 'Other', icon: '❓' }
+		{ id: 'physics', name: 'Physics', icon: '⚛️' }
 	];
 
 	// Reactive subjects list that will include any saved customs

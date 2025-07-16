@@ -29,7 +29,6 @@
 		{ id: 'chemistry', name: 'Chemistry', icon: '🔬' },
 		{ id: 'biology', name: 'Biology', icon: '🌿' },
 		{ id: 'physics', name: 'Physics', icon: '⚛️' },
-		{ id: 'other', name: 'Other', icon: '❓' }
 	];
 
 	// Subjects including any persisted customs (browser only)
