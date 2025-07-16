@@ -1344,10 +1344,10 @@
 								<div class="bg-gradient-to-r from-blue-500 to-blue-600 px-6 py-5 flex items-center justify-between">
 									<div class="flex-1">
 										<h4 class="text-lg font-bold text-white">{supportTitle}</h4>
-										{#if selectedSubject}
+										{#if selectedSubject || customSubject}
 											<div class="flex items-center mt-2">
 												<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-white/20 text-white">
-													{selectedSubject ? subjects.find(s => s.id === selectedSubject)?.name || customSubject : customSubject}
+													{selectedSubject ? (subjects.find(s => s.id === selectedSubject)?.name ?? selectedSubject) : customSubject}
 												</span>
 					</div>
 				{/if}
