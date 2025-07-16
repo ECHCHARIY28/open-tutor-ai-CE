@@ -79,19 +79,45 @@
 	// Access types
 	const accessTypes = ['Private', 'Public', 'Shared'];
 
-	// Predefined subjects
-	const subjects = [
+	// Key shared with creation page for persisting custom subjects
+	const CUSTOM_SUBJECTS_KEY = 'customSubjects';
+
+	// Built-in default subjects
+	const defaultSubjects = [
 		{ id: 'mathematics', name: 'Mathematics', icon: '📊' },
 		{ id: 'science', name: 'Science', icon: '🔬' },
 		{ id: 'history', name: 'History', icon: '🏛️' },
 		{ id: 'computer-science', name: 'Computer Science', icon: '💻' },
 		{ id: 'english', name: 'English', icon: '📚' },
-		{ id: 'Geography', name: 'Geography', icon: '🌍' },
-		{ id: 'Chemistry', name: 'Chemistry', icon: '🔬' },
-		{ id: 'Biology', name: 'Biology', icon: '🌿' },
-		{ id: 'Physics', name: 'Physics', icon: '⚛️' },
-		{ id: 'Other', name: 'Other', icon: '❓' }
+		{ id: 'geography', name: 'Geography', icon: '🌍' },
+		{ id: 'chemistry', name: 'Chemistry', icon: '🔬' },
+		{ id: 'biology', name: 'Biology', icon: '🌿' },
+		{ id: 'physics', name: 'Physics', icon: '⚛️' },
+		{ id: 'other', name: 'Other', icon: '❓' }
 	];
+
+	// Reactive subjects list that will include any saved customs
+	let subjects = [...defaultSubjects];
+
+	// Load custom subjects from localStorage (browser-only)
+	if (browser) {
+		try {
+			const stored = localStorage.getItem(CUSTOM_SUBJECTS_KEY);
+			if (stored) {
+				const customList = JSON.parse(stored);
+				if (Array.isArray(customList)) {
+					customList.forEach((c: any) => {
+						if (c && c.id && !subjects.some(s => s.id === c.id)) {
+							subjects.push(c);
+						}
+					});
+				}
+			}
+		} catch (e) {
+			console.error('Failed to load custom subjects', e);
+		}
+	}
+
 
 	// Subject pagination
 	let subjectPageIndex = 0;
@@ -114,6 +140,33 @@
 	function nextSubjectPage() {
 		if (subjectPageIndex < totalSubjectPages - 1) {
 			subjectPageIndex++;
+		}
+	}
+
+	// Helper: if student entered/edited a custom subject, store it locally for reuse
+	function addCustomSubjectIfNeeded() {
+		const name = customSubject.trim();
+		if (!name) return;
+
+		if (!subjects.some(s => s.name.toLowerCase() === name.toLowerCase())) {
+			const id = name.toLowerCase().replace(/\s+/g, '-');
+			const newSubj = { id, name, icon: '⭐️', custom: true };
+			subjects = [...subjects, newSubj];
+
+			if (browser) {
+				try {
+					const existing = localStorage.getItem(CUSTOM_SUBJECTS_KEY);
+					const list = existing ? JSON.parse(existing) : [];
+					if (Array.isArray(list)) {
+						list.push(newSubj);
+						localStorage.setItem(CUSTOM_SUBJECTS_KEY, JSON.stringify(list));
+					} else {
+						localStorage.setItem(CUSTOM_SUBJECTS_KEY, JSON.stringify([newSubj]));
+					}
+				} catch (e) {
+					console.error('Failed to persist custom subject', e);
+				}
+			}
 		}
 	}
 
@@ -186,6 +239,8 @@
 
 	// Update support in database
 	async function updateSupportInDatabase() {
+		// Ensure any new custom subject is persisted
+		addCustomSubjectIfNeeded();
 		if (!supportId || !browser) return;
 
 		const token = localStorage.getItem('token');
