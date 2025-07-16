@@ -416,19 +416,45 @@
 		}
 	}
 
-	// Predefined subjects
-	const subjects = [
-		{ id: 'Mathematics', name: 'Mathematics', icon: '📊' },
-		{ id: 'Science', name: 'Science', icon: '🔬' },
-		{ id: 'History', name: 'History', icon: '🏛️' },
-		{ id: 'Computer-science', name: 'Computer Science', icon: '💻' },
-		{ id: 'English', name: 'English', icon: '📚' },
-		{ id: 'Geography', name: 'Geography', icon: '🌍' },
-		{ id: 'Chemistry', name: 'Chemistry', icon: '🔬' },
-		{ id: 'Biology', name: 'Biology', icon: '🌿' },
-		{ id: 'Physics', name: 'Physics', icon: '⚛️' },
-		{ id: 'Other', name: 'Other', icon: '❓' }
+	// Key for storing custom subjects in localStorage
+	const CUSTOM_SUBJECTS_KEY = 'customSubjects';
+
+	// Built-in subjects shipped with the app
+	const defaultSubjects = [
+		{ id: 'mathematics', name: 'Mathematics', icon: '📊' },
+		{ id: 'science', name: 'Science', icon: '🔬' },
+		{ id: 'history', name: 'History', icon: '🏛️' },
+		{ id: 'computer-science', name: 'Computer Science', icon: '💻' },
+		{ id: 'english', name: 'English', icon: '📚' },
+		{ id: 'geography', name: 'Geography', icon: '🌍' },
+		{ id: 'chemistry', name: 'Chemistry', icon: '🔬' },
+		{ id: 'biology', name: 'Biology', icon: '🌿' },
+		{ id: 'physics', name: 'Physics', icon: '⚛️' },
+		{ id: 'other', name: 'Other', icon: '❓' }
 	];
+
+	// Reactive list that will include any custom subjects read from localStorage
+	let subjects = [...defaultSubjects];
+
+	// Load custom subjects once on component load (browser-only)
+	if (browser) {
+		try {
+			const saved = localStorage.getItem(CUSTOM_SUBJECTS_KEY);
+			if (saved) {
+				const parsed = JSON.parse(saved);
+				if (Array.isArray(parsed)) {
+					parsed.forEach((subj: any) => {
+						if (subj && subj.id && !subjects.some(s => s.id === subj.id)) {
+							subjects.push(subj);
+						}
+					});
+				}
+			}
+		} catch (e) {
+			console.error('Failed to load custom subjects from localStorage', e);
+		}
+	}
+
 
 	// Subject pagination
 	let subjectPageIndex = 0;
@@ -561,20 +587,51 @@
 		}
 	}
 
+	// Helper: persist a custom subject typed by the user
+	function addCustomSubjectIfNeeded() {
+		const name = customSubject.trim();
+		if (!name) return;
+
+		// Avoid duplicates (case-insensitive)
+		if (!subjects.some(s => s.name.toLowerCase() === name.toLowerCase())) {
+			const id = name.toLowerCase().replace(/\s+/g, '-');
+			const newSubject = { id, name, icon: '⭐️', custom: true };
+			subjects = [...subjects, newSubject];
+
+			// Persist to localStorage for future sessions
+			if (browser) {
+				try {
+					const existing = localStorage.getItem(CUSTOM_SUBJECTS_KEY);
+					const list = existing ? JSON.parse(existing) : [];
+					if (Array.isArray(list)) {
+						list.push(newSubject);
+						localStorage.setItem(CUSTOM_SUBJECTS_KEY, JSON.stringify(list));
+					} else {
+						localStorage.setItem(CUSTOM_SUBJECTS_KEY, JSON.stringify([newSubject]));
+					}
+				} catch (e) {
+					console.error('Failed to persist custom subject', e);
+				}
+			}
+		}
+	}
+
 	// Navigation functions
 	function nextStep() {
+		// If we are exiting the Subject step, store any custom subject the user typed
+		if (currentStep === 0) {
+			addCustomSubjectIfNeeded();
+		}
+
 		if (currentStep < steps.length - 1) {
-			// Add transition direction class for content
 			const contentEl = document.querySelector('.step-content-enter');
 			if (contentEl) {
 				contentEl.classList.remove('step-content-enter');
 				contentEl.classList.add('step-content-exit');
-				
-				// Use a timeout to allow animation to complete before changing step
 				setTimeout(() => {
-			currentStep++;
+					currentStep++;
 				}, 300);
-		} else {
+			} else {
 				currentStep++;
 			}
 		} else {
