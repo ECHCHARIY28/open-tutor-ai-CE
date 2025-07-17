@@ -196,6 +196,15 @@
 			shortDescription = support.short_description || '';
 			selectedSubject = support.subject || '';
 			customSubject = support.custom_subject || '';
+
+			// If a custom subject is present but not yet in the subjects list (e.g. different device), add it so it renders as a card
+			if (customSubject && !subjects.some(s => s.name.toLowerCase() === customSubject.toLowerCase())) {
+				const id = customSubject.toLowerCase().replace(/\s+/g, '-');
+				const tempSubj = { id, name: customSubject, icon: '⭐️', custom: true };
+				subjects = [...subjects, tempSubj];
+				// Preselect this subject so it appears active
+				selectedSubject = id;
+			}
 			selectedCourse = support.course_id || '';
 			learningObjective = support.learning_objective || '';
 			selectedLearningType = support.learning_type || null;
