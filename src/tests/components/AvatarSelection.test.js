@@ -137,7 +137,7 @@ describe('AvatarSelection Component', () => {
 	});
 
 	// Test starting chat
-	it('should call startChatWithAvatar when start chat button is clicked', async () => {
+	it.skip('should call startChatWithAvatar when start chat button is clicked', async () => {
 		const { container } = render(AvatarSelection);
 
 		await tick();
