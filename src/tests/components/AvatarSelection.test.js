@@ -148,6 +148,8 @@ describe('AvatarSelection Component', () => {
 
 		// Then find and click a start chat button if it exists
 		let startChatButton = container.querySelector('.start-chat-button');
+		console.log('Start chat button exists?', !!startChatButton);
+
 
 		// If no button found in horizontal layout, try vertical layout
 		if (!startChatButton) {

@@ -15,6 +15,49 @@
 	}
 	const i18n = getContext<Writable<I18n>>('i18n');
 
+	// Key shared with other pages for persisting custom subjects
+	const CUSTOM_SUBJECTS_KEY = 'customSubjects';
+
+	// Built-in default subjects
+	const defaultSubjects = [
+		{ id: 'mathematics', name: 'Mathematics', icon: '📊' },
+		{ id: 'science', name: 'Science', icon: '🔬' },
+		{ id: 'history', name: 'History', icon: '🏛️' },
+		{ id: 'computer-science', name: 'Computer Science', icon: '💻' },
+		{ id: 'english', name: 'English', icon: '📚' },
+		{ id: 'geography', name: 'Geography', icon: '🌍' },
+		{ id: 'chemistry', name: 'Chemistry', icon: '🔬' },
+		{ id: 'biology', name: 'Biology', icon: '🌿' },
+		{ id: 'physics', name: 'Physics', icon: '⚛️' },
+	];
+
+	// Subjects including any persisted customs (browser only)
+	let subjects = [...defaultSubjects];
+	if (browser) {
+		try {
+			const stored = localStorage.getItem(CUSTOM_SUBJECTS_KEY);
+			if (stored) {
+				const list = JSON.parse(stored);
+				if (Array.isArray(list)) {
+					list.forEach((s: any) => {
+						if (s && s.id && !subjects.some(d => d.id === s.id)) {
+							subjects.push(s);
+						}
+					});
+				}
+			}
+		} catch (e) {
+			console.error('Failed to load custom subjects', e);
+		}
+	}
+
+	function getSubjectInfo(id: string, customName?: string) {
+		const found = subjects.find(s => s.id === id);
+		if (found) return `${found.icon ?? ''} ${found.name}`;
+		if (customName) return `⭐️ ${customName}`;
+		return id;
+	}
+
 	// Support data
 	let support: any = null;
 	let loading = true;
@@ -278,10 +321,7 @@
 									{$i18n.t('Subject')}
 								</h4>
 								<p class="text-gray-800 dark:text-gray-200">
-									{support.subject}
-									{#if support.custom_subject}
-										- {support.custom_subject}
-									{/if}
+									{getSubjectInfo(support.subject, support.custom_subject)}
 								</p>
 							</div>
 
