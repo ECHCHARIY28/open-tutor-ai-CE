@@ -113,7 +113,7 @@
 				class={`text-xl font-semibold ${isDarkMode ? 'text-gray-100' : 'text-gray-800'} flex items-center gap-2`}
 			>
 				<span class="hidden sm:inline">
-					{username ? $i18n.t('Hello') + ' ' + username : $i18n.t('Hello')}
+					{username ? $i18n.t('Hello') + ' ' + username + ' 👋': $i18n.t('Hello')}
 				</span>
 			</h1>
 			<p class={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} hidden sm:block`}>

@@ -399,7 +399,7 @@
 	<div class="flex justify-end">
 		<div class="flex gap-4">
 			<button
-				class="flex items-center gap-2 bg-indigo-500 dark:bg-indigo-600 text-white py-3 px-6 rounded-full hover:bg-indigo-600 dark:hover:bg-indigo-700 transition-colors"
+				class="inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-semibold bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white dark:bg-white dark:text-black dark:hover:bg-gray-200 rounded-full transition"
 				on:click={toggleSupportPopup}
 			>
 				<span class="text-xl font-bold">+</span>
