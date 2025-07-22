@@ -749,7 +749,7 @@
 								/>
 								<button
 									on:click={addKeyword}
-									class="w-full sm:w-auto px-4 py-3 bg-blue-500 text-white rounded-lg sm:rounded-l-none hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors font-medium flex items-center justify-center"
+									class="w-full sm:w-auto px-4 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-lg sm:rounded-l-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors font-semibold flex items-center justify-center"
 								>
 									<span>{$i18n.t('Add')}</span>
 								</button>
