@@ -108,7 +108,7 @@
 					/>
 				</svg>
 				<span class="ml-2 text-gray-700 dark:text-gray-300 font-medium">
-					{$i18n.t('All Support')}
+					{$i18n.t('All Supports')}
 				</span>
 			</div>
 			

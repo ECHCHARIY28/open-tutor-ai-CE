@@ -427,7 +427,7 @@
 									{$i18n.t('Description')}
 								</h4>
 								<div
-									class="bg-gray-50 dark:bg-gray-750 p-4 rounded-lg border border-gray-100 dark:border-gray-700"
+									class="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg border border-gray-100 dark:border-gray-700"
 								>
 									<p class="text-gray-800 dark:text-gray-200">{support.short_description}</p>
 								</div>
@@ -440,7 +440,7 @@
 									{$i18n.t('Learning Objectives')}
 								</h4>
 								<div
-									class="bg-gray-50 dark:bg-gray-750 p-4 rounded-lg border border-gray-100 dark:border-gray-700"
+									class="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg border border-gray-100 dark:border-gray-700"
 								>
 									<p class="text-gray-800 dark:text-gray-200">{support.learning_objective}</p>
 								</div>
@@ -554,7 +554,7 @@
 										>
 										<a
 											href={`/student/c/${support.chat_id}`}
-											class="inline-flex items-center text-blue-600 hover:text-blue-800 text-sm bg-blue-100 dark:bg-blue-900 px-3 py-1 rounded-full"
+											class="inline-flex items-center text-blue-700 dark:text-blue-300 hover:text-blue-900 dark:hover:text-blue-100 text-sm bg-blue-100 dark:bg-blue-800 px-3 py-1 rounded-full transition-colors"
 										>
 											<svg
 												xmlns="http://www.w3.org/2000/svg"
