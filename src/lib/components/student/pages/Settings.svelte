@@ -8,6 +8,8 @@
 	import UpdatePassword from '$lib/components/chat/Settings/Account/UpdatePassword.svelte';
 	import { getGravatarUrl } from '$lib/apis/utils';
 	import { generateInitialsImage, canvasPixelTest } from '$lib/utils';
+	import { settings, theme } from '$lib/stores';
+	import { getLanguages } from '$lib/i18n';
 
 
 	const i18n = getContext('i18n');
@@ -18,6 +20,35 @@
 	let name = '';
 
 	let profileImageInputElement: HTMLInputElement;
+
+	let themes = ['system', 'dark', 'light'];
+	let selectedTheme = 'light';
+	let languages: Awaited<ReturnType<typeof getLanguages>> = [];
+	let lang = $i18n.language;
+
+	const applyTheme = (_theme: string) => {
+		let themeToApply = _theme === 'oled-dark' ? 'dark' : _theme;
+
+		if (_theme === 'system') {
+			themeToApply = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+		}
+
+		themes
+			.filter((e) => e !== themeToApply)
+			.forEach((e) => {
+				e.split(' ').forEach((cls) => document.documentElement.classList.remove(cls));
+			});
+
+		themeToApply.split(' ').forEach((cls) => document.documentElement.classList.add(cls));
+	};
+
+	const themeChangeHandler = (_theme: string) => {
+		theme.set(_theme);
+		localStorage.setItem('theme', _theme);
+		applyTheme(_theme);
+		selectedTheme = _theme;
+	};
+
 
 	const submitHandler = async () => {
 		if (name !== $user.name) {
@@ -48,6 +79,12 @@
 	onMount(async () => {
 		name = $user.name;
 		profileImageUrl = $user.profile_image_url;
+
+		selectedTheme = localStorage.theme ?? 'system';
+		applyTheme(selectedTheme);
+
+		languages = await getLanguages();
+		lang = $i18n.language;
 	});
 </script>
 
@@ -226,6 +263,42 @@
 			<UpdatePassword />
 		</div>
 
+		<!-- UI Preferences -->
+		<div class="space-y-3 pt-2">
+			<div class="flex w-full justify-between">
+				<div class="self-center text-xs font-medium">{$i18n.t('Theme')}</div>
+				<div class="flex items-center relative">
+					<select
+						class="dark:bg-gray-900 w-fit pr-8 rounded-sm py-2 px-2 text-xs bg-transparent outline-hidden text-right"
+						bind:value={selectedTheme}
+						on:change={() => themeChangeHandler(selectedTheme)}
+					>
+						<option value="system">💻 {$i18n.t('System')}</option>
+						<option value="dark">🌑 {$i18n.t('Dark')}</option>
+						<option value="light">☀️ {$i18n.t('Light')}</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="flex w-full justify-between">
+				<div class="self-center text-xs font-medium">{$i18n.t('Language')}</div>
+				<div class="flex items-center relative">
+					<select
+						class="dark:bg-gray-900 w-fit pr-8 rounded-sm py-2 px-2 text-xs bg-transparent outline-hidden text-right"
+						bind:value={lang}
+						on:change={async () => {
+							$i18n.changeLanguage(lang);
+							localStorage.setItem('lang', lang);
+						}}
+					>
+						{#each languages as l}
+							<option value={l.code}>{l.title}</option>
+						{/each}
+					</select>
+				</div>
+			</div>
+		</div>
+
 		<hr class="border-t border-gray-200 dark:border-gray-700 my-4" />
 
 	</div>
@@ -237,6 +310,7 @@
 				const res = await submitHandler();
 
 				if (res) {
+					toast.success($i18n.t('Changes updated successfully'));
 					saveHandler();
 				}
 			}}
