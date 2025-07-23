@@ -399,11 +399,22 @@
 	<div class="flex justify-end">
 		<div class="flex gap-4">
 			<button
-				class="flex items-center gap-2 bg-indigo-500 dark:bg-indigo-600 text-white py-3 px-6 rounded-full hover:bg-indigo-600 dark:hover:bg-indigo-700 transition-colors"
+				class="inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-semibold bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white dark:bg-white dark:text-black dark:hover:bg-gray-200 rounded-full transition"
 				on:click={toggleSupportPopup}
 			>
-				<span class="text-xl font-bold">+</span>
-				<span>{$i18n.t('Support')}</span>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					class="h-5 w-5"
+					viewBox="0 0 20 20"
+					fill="currentColor"
+				>
+					<path
+						fill-rule="evenodd"
+						d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
+						clip-rule="evenodd"
+					/>
+				</svg>
+				{$i18n.t('Support')}
 			</button>
 		</div>
 	</div>
