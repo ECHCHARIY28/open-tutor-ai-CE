@@ -424,7 +424,7 @@
 					</div>
 
 					<div
-						class="bg-gray-50 dark:bg-gray-750 p-6 rounded-lg border border-gray-100 dark:border-gray-700"
+						class="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg border border-gray-100 dark:border-gray-700"
 					>
 						<label class="block text-gray-800 dark:text-gray-200 font-medium mb-4 text-sm">
 							{$i18n.t("Choose a subject you'd like to study")}
@@ -522,7 +522,7 @@
 						</h3>
 
 						<div
-							class="mb-8 bg-gray-50 dark:bg-gray-750 p-6 rounded-lg border border-gray-100 dark:border-gray-700"
+							class="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg border border-gray-100 dark:border-gray-700"
 						>
 							<label
 								for="learningObjective"
@@ -544,7 +544,7 @@
 						</div>
 
 						<div
-							class="bg-gray-50 dark:bg-gray-750 p-6 rounded-lg border border-gray-100 dark:border-gray-700"
+							class="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg border border-gray-100 dark:border-gray-700"
 						>
 							<div class="mb-4">
 								<label class="block text-gray-700 dark:text-gray-200 font-medium text-sm">
@@ -649,7 +649,7 @@
 						</h3>
 
 						<div
-							class="bg-gray-50 dark:bg-gray-750 p-6 rounded-lg border border-gray-100 dark:border-gray-700 mb-8"
+							class="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg border border-gray-100 dark:border-gray-700"
 						>
 							<div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
 								<!-- Content Language -->
@@ -730,7 +730,7 @@
 
 						<!-- Keywords -->
 						<div
-							class="bg-gray-50 dark:bg-gray-750 p-6 rounded-lg border border-gray-100 dark:border-gray-700 mb-8"
+							class="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg border border-gray-100 dark:border-gray-700"
 						>
 							<label class="block text-gray-800 dark:text-gray-200 font-medium mb-2 text-sm">
 								{$i18n.t('Keywords (for search & recommendations)')}
@@ -749,7 +749,7 @@
 								/>
 								<button
 									on:click={addKeyword}
-									class="w-full sm:w-auto px-4 py-3 bg-blue-500 text-white rounded-lg sm:rounded-l-none hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors font-medium flex items-center justify-center"
+									class="w-full sm:w-auto px-4 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-lg sm:rounded-l-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors font-semibold flex items-center justify-center"
 								>
 									<span>{$i18n.t('Add')}</span>
 								</button>
@@ -797,7 +797,7 @@
 
 						<!-- Availability -->
 						<div
-							class="bg-gray-50 dark:bg-gray-750 p-6 rounded-lg border border-gray-100 dark:border-gray-700"
+							class="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg border border-gray-100 dark:border-gray-700"
 						>
 							<label class="block text-gray-800 dark:text-gray-200 font-medium mb-2 text-sm">
 								{$i18n.t('Availability')}
@@ -836,14 +836,13 @@
 				<div class="flex justify-end space-x-4 border-t border-gray-200 dark:border-gray-700 pt-6">
 					<button
 						on:click={() => goto(`/student/support/${supportId}`)}
-						class="px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+						class="px-4 py-2 text-sm font-semibold text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
 					>
 						{$i18n.t('Cancel')}
 					</button>
-
 					<button
 						on:click={updateSupportInDatabase}
-						class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
+						class="inline-flex items-center justify-center gap-2 px-5 py-2 text-sm font-semibold bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-full transition disabled:opacity-50 disabled:cursor-not-allowed"
 						disabled={!canUpdate}
 					>
 						{#if isSubmitting}
