@@ -897,7 +897,8 @@
 								</div>
 						</div>
 
-							<div class="bg-gray-50 dark:bg-gray-750 p-6 rounded-lg border border-gray-100 dark:border-gray-700">
+							<div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg border border-gray-100 dark:border-gray-700"
+>
 								<label class="block text-gray-800 dark:text-gray-200 font-medium mb-4 text-sm">
 								{$i18n.t("Choose a subject you'd like to study")}
 									<span class="text-red-500 ml-1">*</span>
@@ -1045,7 +1046,7 @@
 								{$i18n.t('Define your learning objectives')}
 							</h3>
 							
-							<div class="mb-8 bg-gray-50 dark:bg-gray-750 p-6 rounded-lg border border-gray-100 dark:border-gray-700">
+							<div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg border border-gray-100 dark:border-gray-700">
 								<div class="flex items-center justify-between mb-3">
 								<label
 									for="learningObjective"
@@ -1062,9 +1063,9 @@
 										xmlns="http://www.w3.org/2000/svg"
 										class="h-5 w-5"
 										viewBox="0 0 20 20"
-												fill="currentColor"
+										fill="currentColor"
 									>
-												<path d="M11 17a1 1 0 001.447.894l4-2A1 1 0 0017 15V9.236a1 1 0 00-1.447-.894l-4 2a1 1 0 00-.553.894V17zM15.211 6.276a1 1 0 000-1.788l-4.764-2.382a1 1 0 00-.894 0L4.789 4.488a1 1 0 000 1.788l4.764 2.382a1 1 0 00.894 0l4.764-2.382zM4.447 8.342A1 1 0 003 9.236V15a1 1 0 00.553.894l4 2A1 1 0 009 17v-5.764a1 1 0 00-.553-.894l-4-2z" />
+										<path d="M11 17a1 1 0 001.447.894l4-2A1 1 0 0017 15V9.236a1 1 0 00-1.447-.894l-4 2a1 1 0 00-.553.894V17zM15.211 6.276a1 1 0 000-1.788l-4.764-2.382a1 1 0 00-.894 0L4.789 4.488a1 1 0 000 1.788l4.764 2.382a1 1 0 00.894 0l4.764-2.382zM4.447 8.342A1 1 0 003 9.236V15a1 1 0 00.553.894l4 2A1 1 0 009 17v-5.764a1 1 0 00-.553-.894l-4-2z" />
 									</svg>
 								</button>
 										<div class="absolute z-10 right-0 w-64 p-3 bg-white dark:bg-gray-800 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 text-sm border border-gray-200 dark:border-gray-700 mt-2">
@@ -1085,7 +1086,7 @@
 							></textarea>
 						</div>
 
-							<div class="bg-gray-50 dark:bg-gray-750 p-6 rounded-lg border border-gray-100 dark:border-gray-700">
+							<div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg border border-gray-100 dark:border-gray-700">
 								<div class="mb-4">
 									<label class="block text-gray-700 dark:text-gray-200 font-medium text-sm">
 									{$i18n.t('How can I support you today?')}
@@ -1179,7 +1180,7 @@
 								{$i18n.t('These additional details help us personalize your support experience')}
 							</p>
 							
-							<div class="bg-gray-50 dark:bg-gray-750 p-6 rounded-lg border border-gray-100 dark:border-gray-700 mb-8">
+							<div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg border border-gray-100 dark:border-gray-700 mb-8">
 						<div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
 							<!-- Content Language -->
 							<div>
@@ -1234,7 +1235,7 @@
 						</div>
 
 						<!-- Keywords -->
-							<div class="bg-gray-50 dark:bg-gray-750 p-6 rounded-lg border border-gray-100 dark:border-gray-700 mb-8">
+							<div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg border border-gray-100 dark:border-gray-700 mb-8">
 								<label class="block text-gray-800 dark:text-gray-200 font-medium mb-2 text-sm">
 								{$i18n.t('Keywords (for search & recommendations)')}
 							</label>
@@ -1286,7 +1287,7 @@
 						</div>
 
 						<!-- Availability -->
-							<div class="bg-gray-50 dark:bg-gray-750 p-6 rounded-lg border border-gray-100 dark:border-gray-700">
+							<div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg border border-gray-100 dark:border-gray-700">
 								<label class="block text-gray-800 dark:text-gray-200 font-medium mb-2 text-sm">
 								{$i18n.t('Availability')}
 							</label>
@@ -1497,7 +1498,7 @@
 									{/if}
 
 									<!-- Confirmation Message -->
-									<div class="px-6 py-5 bg-gray-50 dark:bg-gray-750">
+									<div class="px-6 py-5 bg-gray-50 dark:bg-gray-700">
 										<div class="flex items-center text-gray-700 dark:text-gray-300">
 											<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
