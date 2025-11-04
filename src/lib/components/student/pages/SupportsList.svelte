@@ -91,7 +91,7 @@
 			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
-					class="h-5 w-5 mr-2"
+					class="h-5 w-5"
 					viewBox="0 0 20 20"
 					fill="currentColor"
 				>
@@ -123,7 +123,7 @@
 					/>
 				</svg>
 				<span class="ml-2 text-gray-700 dark:text-gray-300 font-medium">
-					{$i18n.t('All Support')}
+					{$i18n.t('All Supports')}
 				</span>
 			</div>
 			
