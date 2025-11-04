@@ -161,6 +161,26 @@
 	let avatarSpeaking = false;
 	let currentAvatarMessage = '';
 
+	// Add demo model when in demo mode
+	$: if ($isDemo) {
+		const demoModel = {
+			id: 'demo',
+			name: 'Demo AI Assistant',
+			owned_by: 'openai',
+			external: false
+		};
+		
+		// Add demo model to models if not already there
+		if (!$models.some(m => m.id === 'demo')) {
+			models.set([demoModel, ...$models]);
+		}
+		
+		// Auto-select demo model if no model selected
+		if (selectedModels.length === 0 || selectedModels.includes('')) {
+			selectedModels = ['demo'];
+		}
+	}
+
 	// Toggle avatar mode function
 	const toggleAvatar = () => {
 		// Update settings store and localStorage
@@ -1271,7 +1291,10 @@
 		prompt = '';
 		if (selectedModels.length === 0) {
 			toast.error($i18n.t('Model not selected'));
-		} else {
+			return;
+		}
+		
+		if (selectedModels.length > 0) {
 			const modelId = selectedModels[0];
 			const model = $models.filter((m) => m.id === modelId).at(0);
 
