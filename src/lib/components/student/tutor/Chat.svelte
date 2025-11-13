@@ -39,7 +39,8 @@
 		showOverview,
 		chatTitle,
 		showArtifacts,
-		tools
+		tools,
+		isFullscreenAvatar
 	} from '$lib/stores';
 	import {
 		convertMessagesToHistory,
@@ -91,6 +92,7 @@
 	import NotificationToast from '$lib/components/NotificationToast.svelte';
 	import Spinner from '$lib/components/common/Spinner.svelte';
 	import AvatarChat from '$lib/components/chat/AvatarChat.svelte';
+	import FullscreenButton from '$lib/components/chat/FullscreenButton.svelte';
 
 	// Debug: Print user permissions when they change
 	$: if ($user) {
@@ -168,6 +170,82 @@
 		});
 		// Save to localStorage for persistence
 		localStorage.setItem('settings', JSON.stringify($settings));
+	};
+
+	// Cross-browser fullscreen request helper
+	function requestFullscreen(element: HTMLElement): Promise<void> {
+		if (element.requestFullscreen) {
+			return element.requestFullscreen();
+		} else if ((element as any).webkitRequestFullscreen) {
+			return (element as any).webkitRequestFullscreen();
+		} else if ((element as any).mozRequestFullScreen) {
+			return (element as any).mozRequestFullScreen();
+		} else if ((element as any).msRequestFullscreen) {
+			return (element as any).msRequestFullscreen();
+		}
+		return Promise.reject(new Error('Fullscreen not supported'));
+	}
+
+	// Cross-browser exit fullscreen helper
+	function exitFullscreen(): Promise<void> {
+		if (document.exitFullscreen) {
+			return document.exitFullscreen();
+		} else if ((document as any).webkitExitFullscreen) {
+			return (document as any).webkitExitFullscreen();
+		} else if ((document as any).mozCancelFullScreen) {
+			return (document as any).mozCancelFullScreen();
+		} else if ((document as any).msExitFullscreen) {
+			return (document as any).msExitFullscreen();
+		}
+		return Promise.reject(new Error('Exit fullscreen not supported'));
+	}
+
+	// Toggle fullscreen mode
+	function toggleFullscreen() {
+		const isCurrentlyFullscreen = $isFullscreenAvatar;
+		
+		if (!isCurrentlyFullscreen) {
+			// Enter fullscreen
+			requestFullscreen(document.documentElement)
+				.then(() => {
+					isFullscreenAvatar.set(true);
+				})
+				.catch(err => {
+					console.error('Fullscreen request failed:', err);
+					toast.error('Unable to enter fullscreen mode');
+				});
+		} else {
+			// Exit fullscreen
+			exitFullscreen()
+				.then(() => {
+					isFullscreenAvatar.set(false);
+				})
+				.catch(err => {
+					console.error('Exit fullscreen failed:', err);
+					toast.error('Unable to exit fullscreen mode');
+				});
+		}
+	}
+
+	// Fullscreen event handlers
+	const handleKeyDown = (e: KeyboardEvent) => {
+		if (e.key === 'Escape' && $isFullscreenAvatar && avatarActive) {
+			toggleFullscreen();
+		}
+	};
+	
+	// Listen for fullscreen change events (user might press ESC or F11 directly)
+	const handleFullscreenChange = () => {
+		const isFullscreenActive = !!(
+			document.fullscreenElement || 
+			(document as any).webkitFullscreenElement || 
+			(document as any).mozFullScreenElement || 
+			(document as any).msFullscreenElement
+		);
+		
+		if (!isFullscreenActive && $isFullscreenAvatar) {
+			isFullscreenAvatar.set(false);
+		}
 	};
 
 	$: if (chatIdProp) {
@@ -502,6 +580,13 @@
 		const chatInput = document.getElementById('chat-input');
 		chatInput?.focus();
 
+		// Register fullscreen event listeners
+		document.addEventListener('keydown', handleKeyDown);
+		document.addEventListener('fullscreenchange', handleFullscreenChange);
+		document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+		document.addEventListener('mozfullscreenchange', handleFullscreenChange);
+		document.addEventListener('MSFullscreenChange', handleFullscreenChange);
+
 		chats.subscribe(() => {});
 	});
 
@@ -509,6 +594,18 @@
 		chatIdUnsubscriber?.();
 		window.removeEventListener('message', onMessageHandler);
 		$socket?.off('chat-events', chatEventHandler);
+		
+		// Clean up fullscreen event listeners
+		document.removeEventListener('keydown', handleKeyDown);
+		document.removeEventListener('fullscreenchange', handleFullscreenChange);
+		document.removeEventListener('webkitfullscreenchange', handleFullscreenChange);
+		document.removeEventListener('mozfullscreenchange', handleFullscreenChange);
+		document.removeEventListener('MSFullscreenChange', handleFullscreenChange);
+		
+		// Reset fullscreen state if active
+		if ($isFullscreenAvatar) {
+			isFullscreenAvatar.set(false);
+		}
 	});
 
 	// File upload functions
@@ -2515,7 +2612,7 @@
 />
 
 <div
-	class="h-screen max-h-[100dvh] transition-width duration-200 ease-in-out bg-[#F5F7F9] dark:bg-inherit {$showSidebar
+	class="h-screen max-h-[100dvh] transition-width duration-200 ease-in-out bg-[#F5F7F9] dark:bg-inherit {($showSidebar && !($isFullscreenAvatar && avatarActive))
 		? 'md:max-w-[calc(100%-260px)]'
 		: ''} w-full max-w-full flex flex-col shadow-md"
 	id="chat-container"
@@ -2534,26 +2631,29 @@
 			/>
 		{/if}
 
-		<Navbar
-			bind:this={navbarElement}
-			chat={{
-				id: $chatId,
-				chat: {
-					title: $chatTitle,
-					models: selectedModels,
-					system: $settings.system ?? undefined,
-					params: params,
-					history: history,
-					timestamp: Date.now()
-				}
-			}}
-			title={$chatTitle}
-			bind:selectedModels
-			shareEnabled={!!history.currentId}
-			{initNewChat}
-			{avatarActive}
-			{toggleAvatar}
-		/>
+		<!-- Hide navbar when in fullscreen avatar mode -->
+		{#if !($isFullscreenAvatar && avatarActive)}
+			<Navbar
+				bind:this={navbarElement}
+				chat={{
+					id: $chatId,
+					chat: {
+						title: $chatTitle,
+						models: selectedModels,
+						system: $settings.system ?? undefined,
+						params: params,
+						history: history,
+						timestamp: Date.now()
+					}
+				}}
+				title={$chatTitle}
+				bind:selectedModels
+				shareEnabled={!!history.currentId}
+				{initNewChat}
+				{avatarActive}
+				{toggleAvatar}
+			/>
+		{/if}
 
 		<PaneGroup direction="horizontal" class="w-full h-full">
 			<Pane defaultSize={50} class="h-full flex w-full relative shadow-md">
@@ -2618,8 +2718,11 @@
 										speaking={avatarSpeaking}
 										on:speechend={() => (avatarSpeaking = false)}
 									/>
+									
+									<!-- Floating fullscreen button -->
+									<FullscreenButton onClick={toggleFullscreen} />
 								</div>
-								<div class="absolute bottom-0 left-0 right-0 z-20 animate-float">
+								<div class="absolute bottom-0 left-0 right-0 z-20 animate-float {$isFullscreenAvatar ? 'px-8 pb-8' : ''}">
 									<MessageInput
 										{history}
 										{selectedModels}
