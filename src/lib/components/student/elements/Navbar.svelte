@@ -6,7 +6,6 @@
 	import { user, isDemo, demoData, originalUserData } from '$lib/stores';
 	import { generateDemoData } from '$lib/utils/mockData';
 	import { toast } from 'svelte-sonner';
-	import { user } from '$lib/stores';
 	import { generateInitialsImage } from '$lib/utils';
 	import { get } from 'svelte/store';
 

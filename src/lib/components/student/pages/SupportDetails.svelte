@@ -658,7 +658,6 @@
 							}}
 							class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors {$isDemo ? 'opacity-75 cursor-not-allowed' : ''}"
 							on:click={() => goto(`/student/support/${support.id}/edit`)}
-							class="px-4 py-2 text-sm font-semibold bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white dark:bg-gradient-to-r dark:from-blue-600 dark:to-indigo-600 dark:hover:from-blue-700 dark:hover:to-indigo-700 rounded-full transition-colors"
 						>
 							{$i18n.t('Edit Support')}
 						</button>
