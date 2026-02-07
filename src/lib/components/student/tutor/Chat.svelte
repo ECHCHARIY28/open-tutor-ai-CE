@@ -41,7 +41,7 @@
 		showArtifacts,
 		tools,
 		isDemo,
-		demoData
+		demoData,
 		isFullscreenAvatar
 	} from '$lib/stores';
 	import { simulateAIResponse, generateMockAvatarResponse } from '$lib/utils/mockLLM';
