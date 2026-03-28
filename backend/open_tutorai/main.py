@@ -5,6 +5,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from open_webui.main import app as webui_app
 from open_webui.config import CORS_ALLOW_ORIGIN
+from datetime import datetime
 from open_webui.models.users import Users
 from open_tutorai.config import AppConfig
 from open_tutorai.models.database import init_database
